@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Profile
 from .forms import CustomUserCreationForm, ProfileForm, SkillForm
+from .utlis import search_profiles
 # Create your views here.
 
 
@@ -64,9 +65,10 @@ def register_user(request):
 
 
 def profiles(request):
-    profiles = Profile.objects.all()
+    profiles, search_query = search_profiles(request)
     context = {
-        'profiles': profiles
+        'profiles': profiles,
+        'search_query': search_query,
     }
     return render(request, 'users/profiles.html', context)
 
@@ -83,7 +85,7 @@ def user_profile(request, pk):
     return render(request, 'users/user-profile.html', context)
 
 
-@login_required(login_url='login')
+@ login_required(login_url='login')
 def user_account(request):
     profile = request.user.profile
 
@@ -97,7 +99,7 @@ def user_account(request):
     return render(request, 'users/account.html', context)
 
 
-@login_required(login_url='login')
+@ login_required(login_url='login')
 def edit_account(request):
     profile = request.user.profile
     form = ProfileForm(instance=profile)
@@ -113,7 +115,7 @@ def edit_account(request):
     return render(request, 'users/profile-form.html', context)
 
 
-@login_required(login_url='login')
+@ login_required(login_url='login')
 def create_skill(request):
     profile = request.user.profile
     form = SkillForm()
@@ -131,7 +133,7 @@ def create_skill(request):
     return render(request, 'users/skill-form.html', context)
 
 
-@login_required(login_url='login')
+@ login_required(login_url='login')
 def update_skill(request, pk):
     profile = request.user.profile
     skill = profile.skill_set.get(id=pk)
