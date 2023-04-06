@@ -6,7 +6,7 @@
   <main class="formPage my-xl">
       <div class="content-box">
           <div class="formWrapper">
-              <a class="backButton" href="#"><i class="im im-angle-left"></i></a>
+              <a class="backButton" href="{% url 'account' %}"><i class="im im-angle-left"></i></a>
               <br>
 
               <form class="form" method="POST" enctype="multipart/form-data">
@@ -20,10 +20,35 @@
                   </div>
                 {% endfor %}
 
+                <div class="form_field">
+                  {% for tag in project.tags.all %}
+                  <div class="project-tag tag tag--pill tag--main" data-tag="{{ tag.id }}" data-project="{{ project.id }}">{{ tag.name }} &#215;</div>
+                  {% endfor %}
+                </div>
+
+                <div class="form_field">
+                  <label for="formInput#text">Tags</label>
+                  <textarea class="input" name="newtags" placeholder="Add tags here..."></textarea>
+                </div>
+
                   <input class="btn btn--sub btn--lg  my-md" type="submit" value="Submit" />
               </form>
           </div>
       </div>
   </main>
+
+  <script>
+    let tags =  document.getElementsByClassName('project-tag')
+
+    for (let i = 0; tags.length > i; i++){
+      tags[i].addEventListener('click', (e)=> {
+        let tagID = e.target.dataset.tag
+        let projectID = e.target.dataset.project
+
+        console.log('TAG ID:', tagID)
+        console.log('PROJECT ID:', projectID)
+      })
+    }
+  </script>
 
 {% endblock content %}
