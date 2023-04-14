@@ -37,18 +37,4 @@
       </div>
   </main>
 
-  <script>
-    let tags =  document.getElementsByClassName('project-tag')
-
-    for (let i = 0; tags.length > i; i++){
-      tags[i].addEventListener('click', (e)=> {
-        let tagID = e.target.dataset.tag
-        let projectID = e.target.dataset.project
-
-        console.log('TAG ID:', tagID)
-        console.log('PROJECT ID:', projectID)
-      })
-    }
-  </script>
-
 {% endblock content %}
